@@ -5,36 +5,37 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.codasoftwares.ecoc.screens.GameScreen;
 import com.codasoftwares.ecoc.screens.MenuScreen;
-import javax.swing.JOptionPane;
 
 public class EcoClicker extends Game {
 	public static AssetManager GameAssets;
-    MenuScreen menuScreen;
-    GameScreen gameScreen;
+	private static EcoClicker instance;
+    private MenuScreen menuScreen;
+    private GameScreen gameScreen;
 
 	@Override
 	public void create () {
+	    instance = this;
         GameAssets = new AssetManager();
 
-		menuScreen = new MenuScreen(this);
-		gameScreen = new GameScreen(this);
+        //SEM NOME DE VARIAVEL QUE COMECE COM _ ISSO NAO É SCRIPTING.
+		menuScreen = new MenuScreen();
+		gameScreen = new GameScreen();
 
         // TODO: new GameScreen(from_saved_data, this);
         setScreen(gameScreen);
-
-        int resultado = 1 + 1; // um mais um é igual a 2
 	}
 
     public void changeScreen(String screenName){
-        if(screenName.equals("MenuScreen")) {
-            menuScreen.resume();
+        if(screenName.equalsIgnoreCase("MenuScreen")) {
             setScreen(menuScreen);
+            //Resume/pause é pra quando perde e recupera o foco
+            //Show é o que faz o que voce esta pensando
         }
-        else if (screenName.equals("GameScreen")){
-            gameScreen.resume();
-            setScreen(menuScreen);
-
-        } else throw new RuntimeException("Invalid Screen { " + screenName + " }");
+        else if (screenName.equalsIgnoreCase("GameScreen")){
+            //Por que sera que nao estava trocando ein...
+            setScreen(gameScreen);
+        } else
+            throw new RuntimeException("Invalid Screen { " + screenName + " }");
     }
 
     @Override
@@ -47,4 +48,11 @@ public class EcoClicker extends Game {
 	@Override
 	public void dispose () {
 	}
+
+	public static EcoClicker getInstance() {
+        if (instance == null) {
+            instance = new EcoClicker();
+        }
+        return instance;
+    }
 }

@@ -8,8 +8,9 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.title = "Eco Clicker";
-		config.width = 340;
-        config.height = 460;
+        config.resizable = false;
+		config.height = (int) Math.round(1920 * 0.4);
+        config.width = (int) Math.round(1080 * 0.4);
 		new LwjglApplication(new EcoClicker(), config);
 	}
 }

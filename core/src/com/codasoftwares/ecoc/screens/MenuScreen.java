@@ -1,7 +1,7 @@
 package com.codasoftwares.ecoc.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -17,14 +17,11 @@ import com.codasoftwares.ecoc.EcoClicker;
 /**
  * Created by jeffbustercase on 10/03/17.
  */
-public class MenuScreen extends ScreenAdapter {
-    private EcoClicker controller;
+public class MenuScreen implements Screen {
     private Stage stage;
-    public MenuScreen(EcoClicker _controller) {
-        super();
-        this.controller = _controller;
 
-
+    @Override
+    public void show() {
         ScreenViewport screenViewport = new ScreenViewport();
         stage = new Stage(screenViewport);
 
@@ -33,13 +30,10 @@ public class MenuScreen extends ScreenAdapter {
         gameButton.setSize( 60 , 60 );
         gameButton.setPosition( 20 , stage.getHeight() - 20 - gameButton.getHeight());
 
-        // TODO: Impossible to get out of MenuScreen
         gameButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-                pause();
-                controller.changeScreen("GameScreen");
+                EcoClicker.getInstance().changeScreen("GameScreen");
             }
         });
 
@@ -52,8 +46,7 @@ public class MenuScreen extends ScreenAdapter {
         // Get font from assets
         BitmapFont sfMonoFont = EcoClicker.GameAssets.getFont("SFMono-Regular.otf", param);
 
-        Label menuLabel = new Label("Menu",
-                new Label.LabelStyle(sfMonoFont, Color.CYAN));
+        Label menuLabel = new Label("Menu", new Label.LabelStyle(sfMonoFont, Color.CYAN));
 
         menuLabel.setPosition(
                 stage.getWidth()/2 - menuLabel.getWidth()/2,
@@ -62,22 +55,38 @@ public class MenuScreen extends ScreenAdapter {
 
         stage.addActor(gameButton);
         stage.addActor(menuLabel);
-    }
-
-    @Override
-    public void show() {
-        super.show();
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
     public void render(float delta) {
-        super.render(delta);
         stage.act();
         stage.draw();
     }
 
     @Override
     public void dispose(){
-        super.dispose();
+        // Quando a referencia dessa tela for apagada permanentemente
+        stage.dispose();
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        // Codigo especial pro evento de redimencionamento
+    }
+
+    @Override
+    public void pause() {
+        // Perda do foco do android: nenhum tratamento especial
+    }
+
+    @Override
+    public void resume() {
+        // Reganho de foco do android: teste
+    }
+
+    @Override
+    public void hide() {
+        // minimizar e trocar a tela temporariamente
     }
 }

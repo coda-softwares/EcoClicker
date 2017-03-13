@@ -1,7 +1,7 @@
 package com.codasoftwares.ecoc.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -17,13 +17,11 @@ import com.codasoftwares.ecoc.EcoClicker;
 /**
  * Created by jeffbustercase on 10/03/17.
  */
-public class GameScreen extends ScreenAdapter {
-    public EcoClicker controller;
+public class GameScreen implements Screen {
     private Stage stage;
-    public GameScreen(EcoClicker _controller) {
-        super();
 
-        this.controller = _controller;
+    @Override
+    public void show() {
 
         ScreenViewport screenViewport = new ScreenViewport();
         stage = new Stage(screenViewport);
@@ -46,10 +44,8 @@ public class GameScreen extends ScreenAdapter {
 
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
-                super.clicked(event, x, y);
-                pause();
-                controller.changeScreen("MenuScreen");
+                //Leia a documentacao
+                EcoClicker.getInstance().changeScreen("MenuScreen");
             }
 
         });
@@ -77,21 +73,35 @@ public class GameScreen extends ScreenAdapter {
         Gdx.input.setInputProcessor(stage);
     }
 
-    @Override
-    public void show() {
-        super.show();
-    }
-
+    //Veja comentarios menu screen
     @Override
     public void render(float delta) {
-        super.render(delta);
         stage.act();
         stage.draw();
     }
 
     @Override
     public void dispose() {
-        super.dispose();
         stage.dispose();
+    }
+
+    @Override
+    public void resize(int width, int height) {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void hide() {
+
     }
 }
