@@ -17,22 +17,19 @@ public class EcoClicker extends Game {
 	    instance = this;
         GameAssets = new AssetManager();
 
-        //SEM NOME DE VARIAVEL QUE COMECE COM _ ISSO NAO É SCRIPTING.
 		menuScreen = new MenuScreen();
 		gameScreen = new GameScreen();
 
-        // TODO: new GameScreen(from_saved_data, this);
+        // TODO: Carregar ultimo estado - sqlite ou server
         setScreen(gameScreen);
 	}
 
     public void changeScreen(String screenName){
         if(screenName.equalsIgnoreCase("MenuScreen")) {
+            // Chama o metodo Show <- ( pode apagar se quiser )
             setScreen(menuScreen);
-            //Resume/pause é pra quando perde e recupera o foco
-            //Show é o que faz o que voce esta pensando
         }
         else if (screenName.equalsIgnoreCase("GameScreen")){
-            //Por que sera que nao estava trocando ein...
             setScreen(gameScreen);
         } else
             throw new RuntimeException("Invalid Screen { " + screenName + " }");
